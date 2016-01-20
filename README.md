@@ -1,5 +1,5 @@
 # Scilab
-Curso de Finanzas Computacionales
+## Curso de Finanzas Computacionales
 
 Bienvenidos al Curso de Finanzas Computacionales.
 
