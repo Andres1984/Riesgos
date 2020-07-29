@@ -1,5 +1,5 @@
-# Scilab
-## Curso de Finanzas Computacionales
+# Riesgos y Coberturas
+## Primer Corte
 
 Bienvenidos al Curso de Finanzas Computacionales.
 
