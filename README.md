@@ -6,12 +6,18 @@
 
 ## Descripción del Curso
 
-Ser asertivo en la presentación de resultados de una empresa o argumentar las conclusiones de una investigación,  son procesos que requieren de una buena compresión de los datos y de preguntas precisas que puedan atender los objetivos generales y específicos de un proyecto. 
 
-La dificultad que se presenta al plantear las ideas y el mensaje que se quiere proyectar, se puede resolver a través de dos vías; la primera con ayuda de la rigurosidad de la estadística que de forma sencilla ofrece una metodología para abordar cualquier problema en cualquier área de estudio, y la segunda es la aplicación de esos conceptos estadísticos a través de programas que hoy en día pueden representar todo lo que una persona quiere decir a través de gráficos, tablas o modelos.
+En este curso se abordarán dos conceptos centrales, el primero, es la medición de riesgos financieros y se relaciona directamente con el proceso cuantitativo, en el cuál a través de métodos de cáluclo estadístico se obtienen índices para interpretar el nivel de exposición al riesgo. El segundo, tiene que ver con la administración y gestión de los riesgos, ys relacionan directamente con la implementación de los índices  pata  minimizar el nivel de exposición al riesgo. En este curso se abordarán los libros de \cite{hull2012risk} y \cite{jorion2000value} como ejes centrales para entender los conceptos alrededor de la gestión y medición de los riesgos financieros. 
 
-El curso de análisis de datos en R se enfocará en generar competencias prácticas y teóricas para que los estudiantes aprendan a abordar, analizar y resolver problemas que requieren un fuerte componente investigativo con ayuda de herramientas tecnológicas. 
 
+
+
+El significado del riesgo dentro en un contexto financiero se relaciona principalmente al proceso de medición de variables que no se pueden determinar  en un horizonte de tiempo,  la razón se centra en  las variaciones que no se pueden predecir y que dificultan entender la naturaleza los movimientos temporales en donde los cambios  de volatilidad  pueden ser estables o irregulares. Por lo tanto, el riesgo es todo aquello que está expuesto a un siniestro (un evento que genera pérdida). 
+
+
+
+
+El riesgo financiero se relaciona principalmente con la posición  de una compañia o inversionista cuando compromete parte de su capital con el objetivo de generar una rentabilidad mayor de un rendimiento libre de riesgo, su objetivo es aumentar los excesos de retorno asumiendo una prima de riesgo a partir de los retornos esperados de los activos.
 
 
 
@@ -31,16 +37,12 @@ El curso de análisis de datos en R se enfocará en generar competencias prácti
 
 | Sesión | Tema |
 | --- | --- |
-| 1| Introducción y funciones principales|
-| 2 | Trabajo con Datos Cargados |
-| 3| Trabajo con Datos de Internet |
-| 4 | Creación  de Documentos Rmw|
-| 5|Gráficos Ggplot|
-| 6 |Gráficos Ggplot|
-| 7|Gráficos Plotly |
-| 8 |Creación de Documentos Científicos|
-| 9| Creación de Documentos Científicos|
-| 10 |Publicación Documentos|
+| 1| Introducción |
+| 2 | Probabilidad |
+| 3| Volatilidad|
+| 4 | Riesgo de Mercado|
+| 5|Riesgo de Crédito|
+
 
 
 
@@ -51,4 +53,5 @@ El curso de análisis de datos en R se enfocará en generar competencias prácti
 *	Jorion, P. (2000). Value at risk. 
 *	[Jorion, P. et al. (2007). Financial risk manager handbook, volume 406. John Wiley & Sons. 
 *	De Lara Haro, A. (2005). Medición y control de riesgos financieros. Editorial Limusa. 
-
+* McNeil, A. J., Frey, R., and Embrechts, P. (2015).
+* Quantitative Risk Management: Concepts, Techniques and Tools-revised edition. Princeton university press.
