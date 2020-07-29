@@ -7,7 +7,7 @@ correo: manuelmartinez@unisalle.edu.co
 ## Descripción del Curso
 
 
-En este curso se abordarán dos conceptos centrales, el primero, es la medición de riesgos financieros y se relaciona directamente con el proceso cuantitativo, en el cuál a través de métodos de cáluclo estadístico se obtienen índices para interpretar el nivel de exposición al riesgo. El segundo, tiene que ver con la administración y gestión de los riesgos, ys relacionan directamente con la implementación de los índices  pata  minimizar el nivel de exposición al riesgo. En este curso se abordarán los libros de \cite{hull2012risk} y \cite{jorion2000value} como ejes centrales para entender los conceptos alrededor de la gestión y medición de los riesgos financieros. 
+En este curso se abordarán dos conceptos centrales, el primero, es la medición de riesgos financieros y se relaciona directamente con el proceso cuantitativo, en el cuál a través de métodos de cáluclo estadístico se obtienen índices para interpretar el nivel de exposición al riesgo. El segundo, tiene que ver con la administración y gestión de los riesgos, ys relacionan directamente con la implementación de los índices  pata  minimizar el nivel de exposición al riesgo. En este curso se abordarán los libros de hull(2012) y jorion( 2000) como ejes centrales para entender los conceptos alrededor de la gestión y medición de los riesgos financieros. 
 
 
 
