@@ -25,13 +25,12 @@ El riesgo financiero se relaciona principalmente con la posición  de una compa�
 
 ## Objetivos Generales
 
-* Identificar las ventajas de R en la estadística como herramienta para la investigación.
-* Utilizar  las  herramientas  estadísticas  para  el  análisis  y  presentación  de  los  datos.
-* Familiarizarse con los aspectos básicos de la programación estadística.
-* Aprender a usar vectores y matrices en la programación.
-* Crear funciones en R.
-* Crear un documento / presentación LaTeX o HTLM.
-* Crear un informe dinámico utilizando RMarkdown y Sweave.
+* Identificar la regulación propia de la medición del riesgo financiero
+* Utilizar  las  herramientas  estadísticas  para  el  análisis  de los métodos de riesgo
+* Familiarizarse con las medidas de riesgo más comunes
+* Entender cuales son los factores de riesgo
+* Aprender a hacer pruebas de stress y back tetsting
+
 
 
 
