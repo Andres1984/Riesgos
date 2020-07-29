@@ -1,7 +1,7 @@
 # Riesgos y Coberturas
 
 
-
+correo: manuelmartinez@unisalle.edu.co
 
 
 ## Descripción del Curso
