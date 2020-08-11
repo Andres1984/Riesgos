@@ -41,3 +41,6 @@ ko=Delt(KO$KO.Close)[-1]
 par(mfrow=c(2,1))
 plot(tslaa, col="blue")
 plot(ko, col="red")
+
+
+
