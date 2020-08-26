@@ -1,4 +1,6 @@
-## Como crear la matriz varcovar para el portafolio
+## Como crear la matriz varcovar para el portafolio, revisar el libro de medición y control 
+## de riesgos financieros, el solo copiar y pegar este codigo no garantiza el exito
+## del ejercicio
 #Vol ewma
 ewa=0.1 ## Vol ewma debe estar diaría
 ewb=0.3
