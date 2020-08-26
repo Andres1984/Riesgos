@@ -1,6 +1,6 @@
 ## Como crear la matriz varcovar para el portafolio
 #Vol ewma
-ewa=0.1 ## Vol ewma
+ewa=0.1 ## Vol ewma debe estar diaría
 ewb=0.3
 ewc=0.12
 
