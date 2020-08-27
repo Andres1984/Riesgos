@@ -17,4 +17,4 @@ a=c(ewa*ewa,pab*ewa*ewb,pac*ewa*ewc,pab*ewa*ewb,ewb*ewb,pbc*ewb*ewc,pac*ewa*ewc,
 #Matriz Varcovar
 
 cov=matrix(a,nrow=3,ncol=3)
-cov*20
+cov=cov*20
