@@ -20,4 +20,4 @@ l=sort(l,decreasing = FALSE)
 EWMAba$l=l
 EWMAba$B=EWMAba[,1]^2
 EWMAba$C=EWMAba$l*EWMAba$B
-volba=sqrt(sum(EWMAba$C)*(1-lambda))*sqrt(20)
+volba=sqrt(sum(EWMAba$C)*(1-lambda))
