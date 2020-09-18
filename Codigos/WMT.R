@@ -67,3 +67,30 @@ colnames(wmt)="WMT"
 ggplot(wmt, aes(x=WMT)) + 
   geom_histogram(aes(y=..density..), colour="black", fill="white")+
   geom_density(alpha=.2, fill="#FF6666") + geom_vline(xintercept = VaR, col="blue")
+
+### Test de Jarque Bera
+
+library(tseries)
+
+jarque.bera.test(wmt)
+
+par(mfrow=c(2,1))
+plot(density(rnorm(100)), type = "l")
+plot(density(rt(100,2)),type = "l" )
+
+
+### VaR Paramétrico t Student
+library(QRM)
+res=fit.st(wmt)
+library(MASS)
+res1=fitdistr(wmt, "t")
+
+nu=res$par.ests[1]
+sigma=res$par.ests[3]
+mut=res$par.ests[2]
+
+
+VaR99t=mut+qt(p=0.01,df=nu)*sigma
+VaR95t=mut+qt(p=0.05,df=nu)*sigma
+VaR90t=mut+qt(p=0.1,df=nu)*sigma
+
