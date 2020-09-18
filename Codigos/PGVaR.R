@@ -53,9 +53,10 @@ VaR90a*10000
 # Proceso diario
 VaR=quantile(pg,probs=c(0.01,0.05,0.1))
 VaR ### Diario
-hist(pg,col="blue",breaks=30)
+p=density(pg)
+hist(pg,col="blue",breaks=30, freq = FALSE)
 abline(v=VaR, col="red")
-
+lines(p,col="red")
 
 # Proceso Mensual
 
@@ -76,3 +77,9 @@ jarque.bera.test(x)
 x <- runif(100)  # alternative
 jarque.bera.test(x)
 
+
+### Modelo paramétrico a través de la distrobución t Student
+library(QRM)
+res=fit.st(pg)
+library(MASS)
+fitdistr(pg, "t")
