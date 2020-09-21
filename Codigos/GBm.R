@@ -1,4 +1,9 @@
 vf=function(va,r,t){
+
+  ### Output en este caso es vf el valor futuro
+  ### Inputs va el valor actual
+  ### r que es la tasa de interés
+  ### t que es el tiempo
   
   vf=va*(1+r)^t
   
