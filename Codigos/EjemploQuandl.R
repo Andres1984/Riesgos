@@ -21,3 +21,7 @@ SI3=tail(SI3$Last,510)
 
 plot(CL3)
 
+
+
+C2=Quandl("CHRIS/LIFFE_C2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts")
+
