@@ -6,8 +6,12 @@ plot(CL3$Last)
 SI3=Quandl("CHRIS/CME_SI3", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts")
 plot(SI3$Last)
 
-
+KC1=Quandl("CHRIS/ICE_KC1", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts")
+plot(KC1$Settle)
+KC1=tail(KC1$Settle,510)
+plot(KC1)
 CL3=tail(CL3$Last,510)
 SI3=tail(SI3$Last,510)
 
 plot(CL3)
+
