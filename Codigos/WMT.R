@@ -75,8 +75,8 @@ library(tseries)
 jarque.bera.test(wmt)
 
 par(mfrow=c(2,1))
-plot(density(rnorm(100)), type = "l")
-plot(density(rt(100,2)),type = "l" )
+plot(density(rnorm(250)), type = "l",main="Normal Distribution")
+plot(density(rt(250,50)),type = "l", main="T Student" )
 
 
 ### VaR Paramétrico t Student
