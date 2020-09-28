@@ -54,10 +54,10 @@ VaR90*20000
 
 ## VaR a través de los percentiles
 
-VaRP=quantile(fb,probs=c(0.01,0.05,0.1))
-VaRP[1]*20000
-VaRP[2]*20000
-VaRP[3]*20000
+VaR=quantile(fb,probs=c(0.01,0.05,0.1))
+VaR[1]*20000
+VaR[2]*20000
+VaR[3]*20000
 
 
 
@@ -177,3 +177,71 @@ matplot(EVFB[,],type = "l",ylab = "Precio",xlab = "Tiempo",main="Escenarios Face
 hoy=3700*EVFB[1,4]
 VaR5SM=3700*EVFB[21,4]
 VaR5SM-hoy
+
+
+
+### Prueba de Back testing para un período de 255 días ####
+
+
+### Organizando los resultados #####
+
+### Usted desea comprar 20 acciones Posición de la Inversión
+### Vamos a organizar el valor de la inversión diaría en una columna
+### Vamos a organizar el VaR diarío parámetrico normal en otra columna
+### Vamos a organizar el VaR diarío parámetrico t Student en otra columna
+### Vamos a organizar el VaR diarío No parámetrico
+
+## Test de Kupiec TK
+
+InvInicial=FB$FB.Close[252]*20
+InvInicial
+
+
+FBTK=FB$FB.Close*20###  Usted desea comprar 20 acciones 
+colnames(FBTK)="Inversion"
+FBTK$VaR1N=FBTK$Inversion*VaR99## VaR paramétrico Dist Normal 99 Nivel de confianza
+FBTK$VaR5N=FBTK$Inversion*VaR95## VaR paramétrico Dist Normal 95 Nivel de confianza
+FBTK$VaR10N=FBTK$Inversion*VaR90## VaR paramétrico Dist Normal 90 Nivel de confianza
+FBTK$VaR1t=FBTK$Inversion*VaR99t## VaR paramétrico Dist t Student 99 Nivel de confianza
+FBTK$VaR5t=FBTK$Inversion*VaR95t## VaR paramétrico Dist t Student 95 Nivel de confianza
+FBTK$VaR10t=FBTK$Inversion*VaR90t## VaR paramétrico Dist t Student 90 Nivel de confianza
+FBTK$VaR1H=FBTK$Inversion*VaR[1]## VaR No paramétrico  99 Nivel de confianza
+FBTK$VaR5H=FBTK$Inversion*VaR[2]## VaR No paramétrico  95 Nivel de confianza
+FBTK$VaR10H=FBTK$Inversion*VaR[3]## VaR No paramétrico  90 Nivel de confianza
+
+plot(FBTK$Inversion)
+dFBTK=diff(FBTK$Inversion)
+
+
+
+dFBTK=dFBTK[-1]
+FBTTK=FBTK[,2:10][-1]### Solo está el VaR
+
+
+TK=NULL
+TK$N99=ifelse(FBTTK$VaR1N>=dFBTK,1,0)
+TK$N95=ifelse(FBTTK$VaR5N>=dFBTK,1,0)
+TK$N90=ifelse(FBTTK$VaR10N>=dFBTK,1,0)
+TK$T99=ifelse(FBTTK$VaR1t>=dFBTK,1,0)
+TK$T95=ifelse(FBTTK$VaR5t>=dFBTK,1,0)
+TK$T90=ifelse(FBTTK$VaR10t>=dFBTK,1,0)
+TK$H99=ifelse(FBTTK$VaR1H>=dFBTK,1,0)
+TK$H95=ifelse(FBTTK$VaR5H>=dFBTK,1,0)
+TK$H90=ifelse(FBTTK$VaR10H>=dFBTK,1,0)
+
+TK=as.data.frame(TK)
+RTK=colSums(TK)
+colnames(TK)=names(FBTTK)  
+RTK=as.data.frame(RTK)
+
+
+
+
+
+
+
+
+
+
+
+
