@@ -38,12 +38,12 @@ VaR90M*10000*3700
 
 ### VaR para  de forma Anual
 
-VaR99M=mtif*250+qnorm(0.01)*sdtif*sqrt(250) ## VaR al con un nivel de confianza del 99%
-VaR99M*10000*3700
-VaR95M=mtif*250+qnorm(0.05)*sdtif*sqrt(250)
-VaR95M*10000*3700
-VaR90M=mtif*250+qnorm(0.1)*sdtif*sqrt(250)
-VaR90M*10000*3700
+VaR99A=mtif*250+qnorm(0.01)*sdtif*sqrt(250) ## VaR al con un nivel de confianza del 99%
+VaR99A*10000*3700
+VaR95A=mtif*250+qnorm(0.05)*sdtif*sqrt(250)
+VaR95A*10000*3700
+VaR90A=mtif*250+qnorm(0.1)*sdtif*sqrt(250)
+VaR90A*10000*3700
 
 
 ### Segundo Método usando los perccentiles No paramétrico
@@ -80,6 +80,7 @@ sigma=res$par.ses[3]
 VaR99t=mu+qt(0.01,nu)*sigma
 VaR95t=mu+qt(0.05,nu)*sigma
 VaR90t=mu+qt(0.1,nu)*sigma
+
 
 # VaR mensual 
 VaR99tm=mu*20+qt(0.01,nu)*sigma*sqrt(20)
@@ -181,3 +182,62 @@ Hoy=3700*TIFEV[1,4]*20
 VaR5Sm=3700*TIFEV[21,4]*20
 
 Perdida5=VaR5Sm-Hoy
+
+
+### Prueba de Back testing para un período de 255 días ####
+
+
+### Organizando los resultados #####
+
+### Usted desea comprar 20 acciones 
+### Vamos a organizar el valor de la inversión diaría en una columna
+### Vamos a organizar el VaR diarío parámetrico normal en otra columna
+### Vamos a organizar el VaR diarío parámetrico t Student en otra columna
+### Vamos a organizar el VaR diarío No parámetrico
+
+
+
+InvInicial=TIF$TIF.Close[252]*20
+InvInicial
+
+TIFTK=TIF$TIF.Close*20###  Usted desea comprar 20 acciones 
+colnames(TIFTK)="Inversion"
+TIFTK$VaR1N=TIFTK$Inversion*VaR99 ## VaR paramétrico Dist Normal 99 Nivel de confianza
+TIFTK$VaR5N=TIFTK$Inversion*VaR95 ## VaR paramétrico Dist Normal 95 Nivel de confianza
+TIFTK$VaR10N=TIFTK$Inversion*VaR90 ## VaR paramétrico Dist Normal 90 Nivel de confianza
+TIFTK$VaR1t=TIFTK$Inversion*VaR99t ## VaR paramétrico Dist T STudent 99 Nivel de confianza
+TIFTK$VaR5t=TIFTK$Inversion*VaR95t ## VaR paramétrico Dist T STudent 95 Nivel de confianza
+TIFTK$VaR10t=TIFTK$Inversion*VaR90t ## VaR paramétrico Dist T STudent 90 Nivel de confianza
+TIFTK$VaR1H=TIFTK$Inversion*VaR[1] ## VaR No paramétrico  99 Nivel de confianza
+TIFTK$VaR5H=TIFTK$Inversion*VaR[2] ## VaR No paramétrico  95 Nivel de confianza
+TIFTK$VaR10H=TIFTK$Inversion*VaR[3] ## VaR No paramétrico  90 Nivel de confianza
+
+dTIFTK=diff(TIFTK$Inversion)
+
+
+dTIFTK=dTIFTK[-1]# Diferencias en la posición
+TIFTTK=TIFTK[,2:10][-1]### Solo está el VaR
+
+
+TK=NULL
+TK$N99=ifelse(TIFTTK$VaR1N>=dTIFTK,1,0)
+TK$N95=ifelse(TIFTTK$VaR5N>=dTIFTK,1,0)
+TK$N90=ifelse(TIFTTK$VaR10N>=dTIFTK,1,0)
+TK$T99=ifelse(TIFTTK$VaR1t>=dTIFTK,1,0)
+TK$T95=ifelse(TIFTTK$VaR5t>=dTIFTK,1,0)
+TK$T90=ifelse(TIFTTK$VaR10t>=dTIFTK,1,0)
+TK$H99=ifelse(TIFTTK$VaR1H>=dTIFTK,1,0)
+TK$H95=ifelse(TIFTTK$VaR5H>=dTIFTK,1,0)
+TK$H90=ifelse(TIFTTK$VaR10H>=dTIFTK,1,0)
+TK=as.data.frame(TK)
+
+RTK=colSums(TK)  
+colnames(TK)=names(TIFTTK)  
+RTK=as.data.frame(RTK)
+
+
+
+
+
+
+
