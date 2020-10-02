@@ -48,9 +48,11 @@ colnames(precios)=c("Cacao","Platino","Queso","Lino","ETF","TRM")
 
 apply(is.na(precios)==TRUE, 2,sum)
 
+View(precios)
+
+
 precios=precios[7:517,]
 
-View(precios)
 
 head(precios)
 tail(precios)
