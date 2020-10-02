@@ -237,6 +237,71 @@ RTK=as.data.frame(RTK)
 
 
 
+### VaR con volatilidad ewma
+
+# Hasta este punto se trabaja con redimientos
+EWMAtif=cbind(tif)
+colnames(EWMAtif)="TIF"
+lambda=0.95
+EWMAtif$l=0
+
+l=rep(0,length(EWMAtif[,2]))### Columnas de ceros
+
+for  (i in length(EWMAtif[,2]):1){
+  
+  l[i]=lambda^(i-1)  ##
+  
+}
+
+l=sort(l,decreasing = FALSE)
+EWMAtif$l=l
+EWMAtif$B=EWMAtif[,1]^2
+EWMAtif$C=EWMAtif$l*EWMAtif$B
+voltif=sqrt(sum(EWMAtif$C)*(1-lambda))
+
+
+
+VaR1NE=mtif+qnorm(0.01)*voltif
+VaR5NE=mtif+qnorm(0.05)*voltif
+VaR10NE=mtif+qnorm(0.1)*voltif
+
+VaR99tE=mu+qt(0.01,nu)*voltif
+VaR95tE=mu+qt(0.05,nu)*voltif
+VaR90tE=mu+qt(0.1,nu)*voltif
+
+
+
+TIFTK$VaR1NE=TIFTK$Inversion*VaR1NE ## VaR paramétrico Dist Normal 99 Nivel de confianza vol ewma
+TIFTK$VaR5NE=TIFTK$Inversion*VaR5NE ## VaR paramétrico Dist Normal 95 Nivel de confianza vol ewma
+TIFTK$VaR10NE=TIFTK$Inversion*VaR10NE ## VaR paramétrico Dist Normal 90 Nivel de confianza vol ewma
+TIFTK$VaR1tE=TIFTK$Inversion*VaR99tE ## VaR paramétrico Dist T STudent 99 Nivel de confianza vol ewma
+TIFTK$VaR5tE=TIFTK$Inversion*VaR95tE ## VaR paramétrico Dist T STudent 95 Nivel de confianza vol ewma
+TIFTK$VaR10tE=TIFTK$Inversion*VaR90tE ## VaR paramétrico Dist T STudent 90 Nivel de confianza vol ewma
+TIFTTK=TIFTK[,2:16][-1]### Solo está el VaR
+
+
+TK=NULL
+TK$N99=ifelse(TIFTTK$VaR1N>=dTIFTK,1,0)
+TK$N95=ifelse(TIFTTK$VaR5N>=dTIFTK,1,0)
+TK$N90=ifelse(TIFTTK$VaR10N>=dTIFTK,1,0)
+TK$T99=ifelse(TIFTTK$VaR1t>=dTIFTK,1,0)
+TK$T95=ifelse(TIFTTK$VaR5t>=dTIFTK,1,0)
+TK$T90=ifelse(TIFTTK$VaR10t>=dTIFTK,1,0)
+TK$H99=ifelse(TIFTTK$VaR1H>=dTIFTK,1,0)
+TK$H95=ifelse(TIFTTK$VaR5H>=dTIFTK,1,0)
+TK$H90=ifelse(TIFTTK$VaR10H>=dTIFTK,1,0)
+TK$NE99=ifelse(TIFTTK$VaR1NE >=dTIFTK,1,0)
+TK$NE95=ifelse(TIFTTK$VaR5NE >=dTIFTK,1,0)
+TK$NE90=ifelse(TIFTTK$VaR10NE>=dTIFTK,1,0)
+TK$TE99=ifelse(TIFTTK$VaR1tE >=dTIFTK,1,0)
+TK$TE95=ifelse(TIFTTK$VaR5tE >=dTIFTK,1,0)
+TK$TE90=ifelse(TIFTTK$VaR10tE>=dTIFTK,1,0)
+
+TK=as.data.frame(TK)
+
+RTK=colSums(TK)  
+colnames(TK)=names(TIFTTK)  
+RTK=as.data.frame(RTK)
 
 
 
