@@ -26,16 +26,16 @@ TRMTS=xts(TRM$Price,date)
 colnames(TRMTS)="TRM"
 plot(TRM)
 plot(TRMTS)
-getSymbols("DBC",src="yahoo", from="2018-10-02", to="2020-10-02")
-KC1=Quandl("CHRIS/ICE_KC1", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date="2018-10-02", end_date="2020-10-02")
-PL1=Quandl("CHRIS/CME_PL1", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts",  start_date="2018-10-02", end_date="2020-10-02")
-QG1=Quandl("CHRIS/CME_QG1", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts",  start_date="2018-10-02", end_date="2020-10-02")
-LN1=Quandl("CHRIS/CME_LN1", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date="2018-10-02", end_date="2020-10-02")
+getSymbols("SDCI",src="yahoo", from="2018-10-02", to="2020-10-02")
+KC1=Quandl("CHRIS/CME_FC2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date="2018-10-02", end_date="2020-10-02")
+PL1=Quandl("CHRIS/SHFE_ZN2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts",  start_date="2018-10-02", end_date="2020-10-02")
+QG1=Quandl("CHRIS/ICE_G2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts",  start_date="2018-10-02", end_date="2020-10-02")
+LN1=Quandl("CHRIS/ICE_N2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date="2018-10-02", end_date="2020-10-02")
 
 
 ### Nos aseguramos de eliminar los valores perdidos
-precios=cbind(KC1$Settle,PL1$Settle,QG1$Settle,LN1$Settle,DBC$DBC.Close,TRMTS)
-index.notNA<-which(is.na(coredata(PL1$Settle))==FALSE)
+precios=cbind(KC1$Settle,PL1$Settle,QG1$Settle,LN1$Settle,SDCI$SDCI.Close,TRMTS)
+index.notNA<-which(is.na(coredata(QG1$Settle))==FALSE)
 precios<-precios[index.notNA,]
 
 head(precios)
@@ -48,9 +48,12 @@ colnames(precios)=c("Cacao","Platino","Queso","Lino","ETF","TRM")
 
 apply(is.na(precios)==TRUE, 2,sum)
 
+precios=precios[7:517,]
 
 head(precios)
 tail(precios)
+
+apply(is.na(precios)==TRUE, 2,sum)
 ### Rendimientos
 
 kc1=Delt(precios$Cacao)[-1]# Rendimiento commoditie A
@@ -142,9 +145,6 @@ pmin=globalMin.portfolio( m.vec60,varcov,shorts = TRUE)
 pmin$er
 pmin$sd
 pmin$weights
-
-
-
 
 
 risk.free=0.21788/100
