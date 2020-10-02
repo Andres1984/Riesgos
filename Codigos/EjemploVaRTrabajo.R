@@ -50,6 +50,8 @@ apply(is.na(precios)==TRUE, 2,sum)
 
 precios=precios[7:517,]
 
+View(precios)
+
 head(precios)
 tail(precios)
 
