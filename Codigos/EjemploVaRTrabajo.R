@@ -17,7 +17,7 @@ library(IntroCompFinR)
 library(xlsx)
 library(readxl)
 library(httr)# Otra forma de encontrar direcciones 
-url1<-'https://github.com/Andres1984/Riesgos/blob/master/Codigos/TRM.xlsx?raw=true'
+url1<-'https://github.com/Andres1984/Riesgos/blob/master/Codigos/TRM.xlsx?raw=true'### Descargar los datos de la TRM
 GET(url1, write_disk(tf <- tempfile(fileext = ".xlsx"))) 
 TRM <- read_excel(tf)
 date <- as.Date(TRM$Date, "%Y-%m-%d")
@@ -57,24 +57,32 @@ kc1=Delt(precios$Cacao)[-1]# Rendimiento commoditie A
 pl=Delt(precios$Platino)[-1]
 qg=Delt(precios$Queso)[-1]
 kn=Delt(precios$Lino)[-1]
-rend=cbind(kc1,pl,qg,kn) # Concateno los rendimientos
-colnames(rend)=names(precios[,1:4])
+etf=Delt(precios$ETF)[-1]
+trm=Delt(precios$TRM)[-1]
+rend=cbind(kc1,pl,qg,kn,etf,trm) # Concateno los rendimientos
+colnames(rend)=names(precios)
 a=cor(rend)
 library(corrplot)
 corrplot(a,method="number")
-
+plot(rend$Platino)
+plot(rend$TRM)
+plot(rend$ETF)
 ## test de Jarque bera
 
 t1=jarque.bera.test(kc1)
 t2=jarque.bera.test(pl)
 t3=jarque.bera.test(qg)
 t4=jarque.bera.test(kn)
-t1;t2;t3;t4
+t5=jarque.bera.test(etf)
+t6=jarque.bera.test(trm)
+
+t1;t2;t3;t4;t5;t6
 ### VaR a 20, 40 y 60 Normal
 
-m.vec=colMeans(rend)
+m.vec=colMeans(rend)### media de todos los retornos
 m.vec
-sd.vec=colStdevs(rend)
+sd.vec=colStdevs(rend) ### desv estandar de todos los retornos
+sd.vec
 ### Cacao
 
 VaRN99c=m.vec[1]+qnorm(0.01)*sd.vec[1]
@@ -124,14 +132,21 @@ VaRT95trm=mutrm+qt(0.05,nutrm)*sdtrm
 VaRT90trm=mutrm+qt(0.1,nutrm)*sdtrm
 VaRT99trm
 VaRN99trm
-### Portafolio optimo y minimo 
-m.vec60=m.vec*60
-varcov=var(rend)*60
+
+
+### Portafolio optimo y minimo ####
+m.vec60=m.vec[1:4]*60 ### vector de rendimientos
+varcov=var(rend[,1:4])*60### Historico#### Aca se debe construir la matriz varcovar con ewma
 
 pmin=globalMin.portfolio( m.vec60,varcov,shorts = TRUE)
 pmin$er
 pmin$sd
 pmin$weights
+
+
+
+
+
 risk.free=0.21788/100
 r=(1+risk.free)^(1/4)-1
 
@@ -140,3 +155,11 @@ pop=tangency.portfolio(m.vec60, varcov, r, shorts = TRUE)
 pop$er
 pop$sd
 pop$weights
+
+inin=200000000/3842
+inin
+inportop=inin*pop$weights
+inportop
+
+inminpor=inin*pmin$weights
+inminpor
