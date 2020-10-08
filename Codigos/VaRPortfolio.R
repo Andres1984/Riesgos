@@ -12,7 +12,7 @@ simbolos=c("TIF","PG","WMT","FB")
 getSymbols(simbolos,src="yahoo", from="2019-10-05",to="2020-10-05")
 
 par(mfrow=c(2,2))
-barChart(TIF)
+plot(TIF$TIF.Close)
 plot(PG$PG.Close)
 plot(WMT$WMT.Close)
 plot(FB$FB.Close)
@@ -26,6 +26,11 @@ colnames(rend)=simbolos
 mu.vec=colMeans(rend)## Vector de rendimientos
 varcovar=var(rend)## Matriz Var Covar vol historíca
 sd.vec=colSds(rend)## Vector de Desviación estandar
+sdtif=sd(tif)
+sdpg=sd(pg)
+sdwmt=sd(wmt)
+sdfb=sd(fb)
+sd.vec=cbind(sdtif,sdpg,sdwmt,sdfb)
 corrp=cor(rend) ## Matriz de correlaciones
 library(corrplot)
 corrplot(corrp,method = "number")
@@ -53,10 +58,12 @@ pop$sd
 wop=pop$weights
 
 
+
 VaR1=c(var.vec[1]^2,corrp[1,2]*var.vec[1]*var.vec[2],corrp[1,3]*var.vec[1]*var.vec[3],corrp[1,4]*var.vec[1]*var.vec[4])
 VaR2=c(corrp[1,2]*var.vec[1]*var.vec[2],var.vec[2]^2,corrp[2,3]*var.vec[2]*var.vec[3],corrp[2,4]*var.vec[2]*var.vec[4])
 VaR3=c(corrp[1,3]*var.vec[1]*var.vec[3],corrp[2,3]*var.vec[2]*var.vec[3],var.vec[3]^2,corrp[3,4]*var.vec[3]*var.vec[4])
 VaR4=c(corrp[1,4]*var.vec[1]*var.vec[4],corrp[2,4]*var.vec[2]*var.vec[4],corrp[3,4]*var.vec[3]*var.vec[4],var.vec[4]^2)
+
 VaRm=rbind(VaR1,VaR2,VaR3,VaR4)
 colnames(VaRm)=simbolos
 rownames(VaRm)=simbolos
@@ -64,8 +71,8 @@ VaR2min=t(wmin)%*%VaRm%*%wmin
 VaRmin=sqrt(VaR2min)
 VaR2op=t(wop)%*%VaRm%*%wop
 VaRop=sqrt(VaR2op)
-VaRmin*50000
-VaRop*50000
+VaRmin*52000
+VaRop*52000
 
 
 
@@ -73,13 +80,13 @@ VaRop*50000
 
 sdmin=pmin$sd
 mumin=pmin$er
-VaRp2v= mumin+qnorm(0.05)*sdmin
-VaRp2v*50000*-1
+VaRp2v= mumin+qnorm(0.05)*sdmin ## Parmétrico normal
+VaRp2v*52000*-1
 
 sdop=pop$sd
 muop=pop$er
 VaRp2op=muop+qnorm(0.05)*sdop
-VaRp2op*50000*-1
+VaRp2op*52000*-1
 
 #### No se le olvide hacer el xts
 
