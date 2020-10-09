@@ -36,28 +36,22 @@ LN1=Quandl("CHRIS/ICE_N2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date
 ### Nos aseguramos de eliminar los valores perdidos
 precios=cbind(KC1$Settle,PL1$Settle,QG1$Settle,LN1$Settle,SDCI$SDCI.Close,TRMTS)
 index.notNA<-which(is.na(coredata(QG1$Settle))==FALSE)
-precios<-precios[index.notNA,]
+
 
 head(precios)
+
 tail(precios)
 
 apply(is.na(precios)==TRUE, 2,sum)
 
-precios<-na.locf(precios)
+precios<-na.locf(precios,na.rm = TRUE)
 colnames(precios)=c("Cacao","Platino","Queso","Lino","ETF","TRM")
 
-apply(is.na(precios)==TRUE, 2,sum)
 
-View(precios)
-
-
-precios=precios[7:517,]
+precios=tail(precios,510)
 
 
-head(precios)
-tail(precios)
 
-apply(is.na(precios)==TRUE, 2,sum)
 ### Rendimientos
 
 kc1=Delt(precios$Cacao)[-1]# Rendimiento commoditie A
@@ -148,7 +142,7 @@ varcov=var(rend[,1:4])*60### Historico#### Aca se debe construir la matriz varco
 pmin=globalMin.portfolio( m.vec60,varcov,shorts = TRUE)
 pmin$er
 pmin$sd
-pmin$weights
+wmin=pmin$weights
 
 
 risk.free=0.21788/100
