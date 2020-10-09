@@ -20,15 +20,29 @@ sdwmt=sd(wmt)
 # VaR al Diario
 
 VaR99=mwmt+qnorm(0.01)*sdwmt ##Diario Compradora
-VaR99*20*10000
+VaR99*10000
 
 #VaR99=mwmt+qnorm(0.99)*sdwmt ## Diario Vendedora
 #VaR99
 
 VaR95=mwmt+qnorm(0.05)*sdwmt ## Diario al 5%
-VaR95*10000*3700
+VaR95*10000
 VaR90=mwmt+qnorm(0.1)*sdwmt ## Diario al 10%
-VaR90*10000*3700
+VaR90*10000
+
+
+### ES WMT
+
+p = c(0.01,0.05,0.1) 
+VaR = qnorm(p)
+VaR
+ES = -dnorm(qnorm(p))/p
+ES
+
+ES99=mwmt+ES[1]*sdwmt
+ES95=mwmt+ES[2]*sdwmt
+ES90=mwmt+ES[3]*sdwmt
+
 ## VaR Mensual
 
 VaR99M=mwmt*20+qnorm(0.01)*sdwmt*sqrt(20)##Mensual al 1%
@@ -60,8 +74,9 @@ VaR1A
 VaR=quantile(wmt, probs = c(0.01, 0.05, 0.1))
 VaRM=VaR*sqrt(20)
 VaRA=VaR*sqrt(250)
-
-
+ESH=quantile(wmt, probs= c(0.005, 0.025, 0.05))
+ESH*52000*0.3
+VaR*52000*0.3
 library(ggplot2)
 colnames(wmt)="WMT"
 ggplot(wmt, aes(x=WMT)) + 
@@ -90,10 +105,20 @@ sigma=res$par.ests[3]
 mut=res$par.ests[2]
 
 
+
 VaR99t=mut+qt(p=0.01,df=nu)*sigma ## VaR paramétrico t Student
 VaR95t=mut+qt(p=0.05,df=nu)*sigma
 VaR90t=mut+qt(p=0.1,df=nu)*sigma
 
+p = c(0.01,0.05,0.1) 
+VaRtES = qt(p,nu)
+VaRtES
+ESt = -dt(p,nu)/p
+ESt
+
+ES99t=mut+ESt[1]*sigma
+ES95t=mut+ESt[2]*sigma
+ES90t=mut+ESt[3]*sigma
 
 
 ### Organizando los resultados #####
