@@ -110,6 +110,7 @@ VaRt95*10000
 VaRt90*10000
 p = c(0.1,0.05,0.01) 
 VaRtES = qt(p,nu)
+VaRtES
 ES = -dt(p,nu)/p
 ES
 
