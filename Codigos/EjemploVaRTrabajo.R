@@ -33,8 +33,18 @@ QG1=Quandl("CHRIS/ICE_G2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts",  start_dat
 LN1=Quandl("CHRIS/ICE_N2", api_key="zxdSEzha_e_UwhD8Pgdw",type="xts", start_date="2018-10-02", end_date="2020-10-02")
 
 
+
+delete.na <- function(df, n=0) { 
+  
+  df[rowSums(is.na(df)) <= n,] 
+  
+} 
+
+
 ### Nos aseguramos de eliminar los valores perdidos
 precios=cbind(KC1$Settle,PL1$Settle,QG1$Settle,LN1$Settle,SDCI$SDCI.Close,TRMTS)
+precios <-  delete.na(precios) 
+
 index.notNA<-which(is.na(coredata(QG1$Settle))==FALSE)
 
 
@@ -44,11 +54,10 @@ tail(precios)
 
 apply(is.na(precios)==TRUE, 2,sum)
 
-precios<-na.locf(precios,na.rm = TRUE)
+#precios<-na.locf(precios,na.rm = TRUE)
 colnames(precios)=c("Cacao","Platino","Queso","Lino","ETF","TRM")
 
 
-precios=tail(precios,510)
 
 
 
