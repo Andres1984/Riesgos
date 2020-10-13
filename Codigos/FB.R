@@ -7,7 +7,7 @@ fb=Delt(FB$FB.Close)[-1]
 plot(FB$FB.Close)
 plot(fb, main="rendimientos")
 hist(fb, breaks=50, col="blue")
-abline(v = VaRP,col="red")
+abline(v = VaR,col="red")
 
 ## Primer Método
 
@@ -22,6 +22,22 @@ VaR95=mfb+qnorm(0.05)*sdfb
 VaR95*20000
 VaR90=mfb+qnorm(0.1)*sdfb
 VaR90*20000
+
+
+### ES FB
+
+p = c(0.1,0.05,0.01) 
+VaR = qnorm(p)
+ES = -dnorm(qnorm(p))/p
+ES
+
+
+ES99=mfb+ES[3]*sdfb
+ES99*20000
+ES95=mfb+ES[2]*sdfb
+ES95*20000
+ES90=mfb+ES[1]*sdfb
+ES90*20000
 
 ## VaR Mensual
 
@@ -69,14 +85,31 @@ library(QRM)
 res=fit.st(fb)
 sigma=res$par.ests[3]
 nu=res$par.ests[1]
+mut=res$par.ests[2]
 
 # VaR Diario
 
-VaR99t=mfb+sigma*qt(p=0.01,df=nu)
-VaR95t=mfb+sigma*qt(p=0.05,df=nu)
-VaR90t=mfb+sigma*qt(p=0.1,df=nu)
+VaR99t=mut+sigma*qt(p=0.01,df=nu)
+VaR95t=mut+sigma*qt(p=0.05,df=nu)
+VaR90t=mut+sigma*qt(p=0.1,df=nu)
+VaR99t*10000
+VaR95t*10000
+VaR90t*10000
+## ES para t Student
+
+p = c(0.1,0.05,0.01) 
+VaRt = qt(p,nu)
+ESt = -dt(p,nu)/p
+ESt
 
 
+ESt99=mut+sigma*ESt[3]
+ESt95=mut+sigma*ESt[2]
+ESt90=mut+sigma*ESt[1]
+
+ESt99*10000
+ESt95*10000
+ESt90*10000
 #VaR mensual
 
 VaR99tm=mfb*20+sigma*sqrt(20)*qt(p=0.01,df=nu)
@@ -137,7 +170,7 @@ caminatas <- function(s0, mu, sigma, nsims, periods)
 
 
 nsims=10000
-periods=0:20
+periods=0:60
 FBSM=caminatas(as.numeric(tail(FB$FB.Close ,1)),mfb,sdfb,nsims,periods)
 matplot(periods,FBSM[,1:10000],type = "l",ylab = "Precio", xlab="Tiempo", main=" Escenario Facebook")
 
@@ -235,6 +268,17 @@ colnames(TK)=names(FBTTK)
 RTK=as.data.frame(RTK)
 
 
+
+#### Test de Kupiec para el Movimiento Geométrico Browniano
+
+periods=0:251
+
+FBSMTK=caminatas(as.numeric(head(FB$FB.Close ,1)),mfb,sdfb,nsims,periods)
+
+EVFBTK=EV(FBSMTK)
+EVFBTK$HISTORICO=FB$FB.Close
+
+matplot(EVFBTK[,],type = "l",ylab = "Precio",xlab = "Tiempo",main="Test de Kupiec Facebook")
 
 
 
